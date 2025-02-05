@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public int bowserHealthScore = 5;
     public Canvas gameWinScreen;
     public Canvas gameOverScreen;
+    public Canvas hurtScreen;
 
     public void RestartButtonCallback (int input)
     {
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     private void ResetGame()
     {
         StopAllCoroutines();
+        hurtScreen.gameObject.SetActive(false);
         gameOverScreen.gameObject.SetActive(false);
         gameWinScreen.gameObject.SetActive(false);
         marioBody.velocity = Vector2.zero;
@@ -77,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hurtScreen.gameObject.SetActive(false);
         gameOverScreen.gameObject.SetActive(false);
         gameWinScreen.gameObject.SetActive(false);
         // Set to be 30 FPS
@@ -138,8 +142,8 @@ public class PlayerMovement : MonoBehaviour
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
             readyToAttack = false;
             damageLock = true;
-            marioBody.rotation = 45;
-            toppledState = true;
+            // marioBody.rotation = 45;
+            // toppledState = true;
             StartCoroutine(DamageLock());
         } else if (readyToAttack && !onGroundState)
         {
@@ -150,8 +154,6 @@ public class PlayerMovement : MonoBehaviour
         {
             // REVIEW - Game Over Logic
             Debug.Log("Game Over");
-            marioBody.rotation = 45;
-            toppledState = true;
             Time.timeScale = 0.0f;
             gameOverScreen.gameObject.SetActive(true);
 
@@ -171,7 +173,9 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DamageLock()
     {
+        hurtScreen.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
+        hurtScreen.gameObject.SetActive(false);
         damageLock = false;
         Debug.Log("Damage Lock Released");
     }
@@ -208,13 +212,10 @@ public class PlayerMovement : MonoBehaviour
             marioSprite.sprite = marioGroundSprite;
         }
 
-        // if (damageLock)
-        // {
-        //     marioSprite.sprite = damagedMarioGroundSprite;
-        // } else
-        // {
-        //     marioSprite.sprite = marioGroundSprite;
-        // }
+        if (marioBody.rotation == 0 && !onGroundState)
+        {
+            toppledState = false;
+        }
 
     }
 
@@ -255,8 +256,8 @@ public class PlayerMovement : MonoBehaviour
             //TODO - Get Damaged
             marioHealthScore--;
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
-            toppledState = true;
-            marioBody.rotation = 45;
+            // toppledState = true;
+            // marioBody.rotation = 45;
             damageLock = true;
             StartCoroutine(DamageLock());
         } else if (other.gameObject.CompareTag("Fireball") && !onGroundState && readyToAttack && !damageLock)
@@ -264,8 +265,8 @@ public class PlayerMovement : MonoBehaviour
             // TODO - Get Damaged
             marioHealthScore--;
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
-            toppledState = true;
-            marioBody.rotation = 45;
+            // toppledState = true;
+            // marioBody.rotation = 45;
             damageLock = true;
             StartCoroutine(DamageLock());
         }
@@ -273,6 +274,16 @@ public class PlayerMovement : MonoBehaviour
             readyToAttack = true;
             marioSprite.sprite = attackMarioJumpSprite;
             Destroy(other.gameObject);
+        } else if (other.gameObject.CompareTag("Fireball") && !onGroundState && readyToAttack)
+        {
+            //REVIEW - Get Damaged
+            marioHealthScore--;
+            marioHealthText.text = "Health: " + marioHealthScore.ToString();
+            readyToAttack = false;
+            toppledState = true;
+            marioBody.rotation = 45;
+            damageLock = true;
+            StartCoroutine(DamageLock());
         }
     }
 
@@ -282,6 +293,7 @@ public class PlayerMovement : MonoBehaviour
         marioBody.rotation = 0;
         toppledState = false;
     }
+
 
 
 }

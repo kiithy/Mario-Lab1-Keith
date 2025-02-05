@@ -8,3 +8,5 @@ In this game, fire works like lighting. Inspired by the Lightning Redirection me
   - Press spacebar while in the air after catching a fireball to shoot the fireball back.
 - WASD for movement.
 - If Mario happens to lose balance and falls over, just press spacebar to make him get back up.
+
+**Get Bowsers' Health to zero before yours!**

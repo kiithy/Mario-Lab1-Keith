@@ -148,7 +148,6 @@ public class PlayerMovement : MonoBehaviour
             gameWinScreen.gameObject.SetActive(true);
         }
 
-
     }
 
     IEnumerator DamageLock()
@@ -227,11 +226,15 @@ public class PlayerMovement : MonoBehaviour
             //TODO - Get Damaged
             marioHealthScore--;
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
+            toppledState = true;
+            marioBody.rotation = 45;
         } else if (other.gameObject.CompareTag("Fireball") && !onGroundState && readyToAttack)
         {
             // TODO - Get Damaged
             marioHealthScore--;
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
+            toppledState = true;
+            marioBody.rotation = 45;
         }
         else if (other.gameObject.CompareTag("Fireball") && !onGroundState && !readyToAttack) {
             readyToAttack = true;

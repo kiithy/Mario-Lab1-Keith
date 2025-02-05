@@ -8,6 +8,7 @@ public class Bowser : MonoBehaviour
     public GameObject fireball;
     public float fireballInterval = 1.0f;
     public float timeToStartFiring = 2.0f;
+    public Rigidbody2D bowserBody;
     // Start is called before the first frame update
     void Start()
     {

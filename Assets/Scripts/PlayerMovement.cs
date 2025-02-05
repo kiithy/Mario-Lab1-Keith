@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private bool toppledState = false;
     public Sprite attackMarioJumpSprite;
     public Sprite attackMarioGroundSprite;
+    public Sprite damagedMarioJumpSprite;
+    public Sprite damagedMarioGroundSprite;
     private bool readyToAttack = false;
     public GameObject marioFireball;
     public TextMeshProUGUI marioHealthText;
@@ -52,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         marioBody.velocity = Vector2.zero;
         marioBody.position = new Vector2(-17.15f, -1.91f);
         marioBody.rotation = 0;
+        bowser.GetComponent<Bowser>().bowserBody.rotation = 0;
         marioSprite.sprite = marioGroundSprite;
         onGroundState = true;
         faceRightState = true;
@@ -102,9 +105,17 @@ public class PlayerMovement : MonoBehaviour
             marioSprite.flipX = false;
         }
 
-        if (!onGroundState && !readyToAttack)
+        if (!onGroundState && !readyToAttack && !damageLock)
         {
             marioSprite.sprite = marioJumpSprite;
+        }
+        else if (!readyToAttack && !onGroundState && damageLock)
+        {
+            marioSprite.sprite = damagedMarioJumpSprite;
+        }
+        else if (!readyToAttack && onGroundState && damageLock)
+        {
+            marioSprite.sprite = damagedMarioGroundSprite;
         }
         else if (onGroundState && !readyToAttack)
         {
@@ -127,6 +138,8 @@ public class PlayerMovement : MonoBehaviour
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
             readyToAttack = false;
             damageLock = true;
+            marioBody.rotation = 45;
+            toppledState = true;
             StartCoroutine(DamageLock());
         } else if (readyToAttack && !onGroundState)
         {
@@ -137,15 +150,21 @@ public class PlayerMovement : MonoBehaviour
         {
             // REVIEW - Game Over Logic
             Debug.Log("Game Over");
+            marioBody.rotation = 45;
+            toppledState = true;
             Time.timeScale = 0.0f;
             gameOverScreen.gameObject.SetActive(true);
+
+
         }
 
         if (bowserHealthScore <= 0)
         {
             // REVIEW - Game Win Logic
+            bowser.GetComponent<Bowser>().bowserBody.rotation = -45;
             StartCoroutine(WinGame());
             gameWinScreen.gameObject.SetActive(true);
+
         }
 
     }
@@ -154,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         damageLock = false;
+        Debug.Log("Damage Lock Released");
     }
 
     // FixedUpdate is called 50 times a second
@@ -185,7 +205,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 StartCoroutine(MarioFireBall());
             }
+            marioSprite.sprite = marioGroundSprite;
         }
+
+        // if (damageLock)
+        // {
+        //     marioSprite.sprite = damagedMarioGroundSprite;
+        // } else
+        // {
+        //     marioSprite.sprite = marioGroundSprite;
+        // }
 
     }
 
@@ -220,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Fireball") && onGroundState)
+        if (other.gameObject.CompareTag("Fireball") && onGroundState && !damageLock)
         {
             Debug.Log("Damaged by Fireball");
             //TODO - Get Damaged
@@ -228,13 +257,17 @@ public class PlayerMovement : MonoBehaviour
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
             toppledState = true;
             marioBody.rotation = 45;
-        } else if (other.gameObject.CompareTag("Fireball") && !onGroundState && readyToAttack)
+            damageLock = true;
+            StartCoroutine(DamageLock());
+        } else if (other.gameObject.CompareTag("Fireball") && !onGroundState && readyToAttack && !damageLock)
         {
             // TODO - Get Damaged
             marioHealthScore--;
             marioHealthText.text = "Health: " + marioHealthScore.ToString();
             toppledState = true;
             marioBody.rotation = 45;
+            damageLock = true;
+            StartCoroutine(DamageLock());
         }
         else if (other.gameObject.CompareTag("Fireball") && !onGroundState && !readyToAttack) {
             readyToAttack = true;

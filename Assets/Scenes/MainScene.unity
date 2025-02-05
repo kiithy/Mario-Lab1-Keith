@@ -357,7 +357,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &50783484
 MonoBehaviour:
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Restart
+  m_text: Start / Restart
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 818e27cb55bfe419fb41a80fa2f4575c, type: 2}
   m_sharedMaterial: {fileID: -1445658357743181749, guid: 818e27cb55bfe419fb41a80fa2f4575c, type: 2}
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -23.831406, w: 0}
+  m_margin: {x: 0, y: 0, z: -23.831406, w: -2.3388176}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1613,7 +1613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireball: {fileID: 6206017730761069056, guid: 2324701e4e95b45429e9b86a6ecb788c, type: 3}
-  fireballInterval: 0.25
+  fireballInterval: 0.35
   timeToStartFiring: 2
   bowserBody: {fileID: 776437338}
 --- !u!50 &776437338
@@ -2923,8 +2923,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 785, y: 475}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 814.81, y: 446.35}
+  m_SizeDelta: {x: 219.64, y: 87.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1467456600
 MonoBehaviour:

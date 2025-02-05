@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4385055617427476534, guid: 93977449f77fe4af196d0dadeffd572a, type: 3}
   minSpeed: 7
-  maxSpeed: 15
+  maxSpeed: 10
 --- !u!61 &-7341025356691990106
 BoxCollider2D:
   m_ObjectHideFlags: 0

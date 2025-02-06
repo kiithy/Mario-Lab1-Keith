@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public Button restartButton;
     private bool damageLock = false;
     public TextMeshProUGUI bowserHealthText;
+    public TextMeshProUGUI bowserHealthGameOverText;
 
     [System.NonSerialized]
     public int marioHealthScore = 3; // we don't want this to show up in the inspector
@@ -157,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
             // REVIEW - Game Over Logic
             Debug.Log("Game Over");
             Time.timeScale = 0.0f;
+            bowserHealthGameOverText.text = "Bowser's Health: " + bowserHealthScore.ToString();
             gameOverScreen.gameObject.SetActive(true);
 
 

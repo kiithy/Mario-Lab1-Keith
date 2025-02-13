@@ -7,16 +7,17 @@ TagManager:
   - Ground
   - Enemy
   - Fireball
+  - Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstacles
   - Water
   - UI
+  - Bowser Fireball
   - 
-  - 
-  - 
+  - Castle
   - 
   - 
   - 

@@ -9,6 +9,8 @@ public class Bowser : MonoBehaviour
     public float fireballInterval = 1.0f;
     public float timeToStartFiring = 2.0f;
     public Rigidbody2D bowserBody;
+    public AudioSource bowserAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,9 @@ public class Bowser : MonoBehaviour
         StopAllCoroutines(); // Stop any existing coroutines
         StartCoroutine(ShootFireball(new WaitForSeconds(fireballInterval)));
     }
+
+
+
 
     // Update is called once per frame
     void Update()
